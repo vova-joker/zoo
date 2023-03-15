@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: Animal
+  description: Animal(s)
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080'
+tags:
+  - name: animal
+    description: animal handler
+paths:
+  "/animal/{id}":
+    get:
+      tags:
+        - animal
+      summary: get one animal by id
+      operationId: getAnimalById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnimalResultDto"
+
+    delete:
+      tags:
+        - animal
+      summary: delete animal
+      operationId: deleteAnimal
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+
+  "/animal":
+    get:
+      tags:
+        - animal
+      summary: get all animals
+      operationId: getAllAnimals
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AnimalResultDto"
+
+    post:
+      tags:
+        - animal
+      summary: add animal
+      operationId: addAnimal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnimalPostDto"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnimalResultDto"
+
+    put:
+      tags:
+        - animal
+      summary: update animal
+      operationId: updateAnimal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnimalResultDto"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnimalResultDto"
+
+
+
+components:
+  schemas:
+    AnimalResultDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        type:
+          type: string
+        is_predator:
+          type: boolean
+
+    AnimalPostDto:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        is_predator:
+          type: boolean
+
